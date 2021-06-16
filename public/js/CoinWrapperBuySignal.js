@@ -59,9 +59,19 @@ class CoinWrapperBuySignal extends React.Component {
         )}
         {buy.lowestPrice ? (
           <div className='coin-info-column coin-info-column-lowest-price'>
-            <span className='coin-info-label'>Lowest price:</span>
+            <span className='coin-info-label'>Target price:</span>
             <HightlightChange className='coin-info-value'>
-              {parseFloat(buy.lowestPrice).toFixed(precision)}
+              {buy.lowestPrice > 0 ? parseFloat(buy.lowestPrice).toFixed(precision) : "N/A"}
+            </HightlightChange>
+          </div>
+        ) : (
+          ''
+        )}
+        {buy.rsi ? (
+          <div className='coin-info-column coin-info-column-lowest-price'>
+            <span className='coin-info-label'>RSI:</span>
+            <HightlightChange className='coin-info-value'>
+              {parseFloat(buy.rsi).toFixed(2)}
             </HightlightChange>
           </div>
         ) : (
@@ -78,7 +88,7 @@ class CoinWrapperBuySignal extends React.Component {
               %):
             </span>
             <HightlightChange className='coin-info-value'>
-              {parseFloat(buy.triggerPrice).toFixed(precision)}
+              {buy.triggerPrice > 0 ? parseFloat(buy.triggerPrice).toFixed(precision) : "N/A"}
             </HightlightChange>
           </div>
         ) : (

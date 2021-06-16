@@ -14,7 +14,9 @@ const canBuy = data => {
     sell: { lastBuyPrice }
   } = data;
 
-  return lastBuyPrice <= 0 && buyCurrentPrice <= buyTriggerPrice;
+  return (lastBuyPrice <= 0 || currentPrice * 1.02 < lastBuyPrice)//DCA
+    && buyCurrentPrice <= buyTriggerPrice
+    && buyTriggerPrice > 0;
 };
 
 /**
@@ -176,9 +178,9 @@ const execute = async (logger, rawData) => {
         data,
         'wait',
         `The current price reached the trigger price. ` +
-          `But you have enough ${baseAsset} to sell. ` +
-          `Set the last buy price to start selling. ` +
-          `Do not process buy.`
+        `But you have enough ${baseAsset} to sell. ` +
+        `Set the last buy price to start selling. ` +
+        `Do not process buy.`
       );
     }
 
@@ -193,8 +195,8 @@ const execute = async (logger, rawData) => {
         data,
         'buy-temporary-disabled',
         'The current price reached the trigger price. ' +
-          `However, the action is temporarily disabled by ${checkDisable.disabledBy}. ` +
-          `Resume buy process after ${checkDisable.ttl}s.`
+        `However, the action is temporarily disabled by ${checkDisable.disabledBy}. ` +
+        `Resume buy process after ${checkDisable.ttl}s.`
       );
     }
 
@@ -223,8 +225,8 @@ const execute = async (logger, rawData) => {
           data,
           'sell-temporary-disabled',
           'The current price is reached the sell trigger price. ' +
-            `However, the action is temporarily disabled by ${checkDisable.disabledBy}. ` +
-            `Resume sell process after ${checkDisable.ttl}s.`
+          `However, the action is temporarily disabled by ${checkDisable.disabledBy}. ` +
+          `Resume sell process after ${checkDisable.ttl}s.`
         );
       }
       // Then sell
@@ -247,8 +249,8 @@ const execute = async (logger, rawData) => {
           data,
           'sell-temporary-disabled',
           'The current price is reached the stop-loss price. ' +
-            `However, the action is temporarily disabled by ${checkDisable.disabledBy}. ` +
-            `Resume sell process after ${checkDisable.ttl}s.`
+          `However, the action is temporarily disabled by ${checkDisable.disabledBy}. ` +
+          `Resume sell process after ${checkDisable.ttl}s.`
         );
       }
       // Then sell market order

@@ -43,7 +43,7 @@
     "trailingTrade": {
       "enabled": true,
       "cronTime": "* * * * * *",
-      "symbols": ["BTCUSDT", "ETHUSDT", "ETHBTC", "XRPBTC"],
+      "symbols": [],
       "candles": {
         "interval": "1h",
         "limit": 100
