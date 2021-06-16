@@ -147,7 +147,8 @@ const execute = async (logger, rawData) => {
     action,
     symbol,
     isLocked,
-    symbolInfo: { baseAsset }
+    symbolInfo: { baseAsset },
+    sell: { lastBuyPrice }
   } = data;
 
   if (isLocked) {
@@ -172,7 +173,7 @@ const execute = async (logger, rawData) => {
   //    and current balance has not enough value to sell,
   //  then buy.
   if (canBuy(data)) {
-    if (hasBalanceToSell(data)) {
+    if (hasBalanceToSell(data) && lastBuyPrice <= 0) {
       return setBuyActionAndMessage(
         logger,
         data,
