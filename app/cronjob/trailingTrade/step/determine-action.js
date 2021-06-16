@@ -14,7 +14,8 @@ const canBuy = data => {
     sell: { lastBuyPrice }
   } = data;
 
-  return (lastBuyPrice <= 0 || buyCurrentPrice * 1.02 < lastBuyPrice)//DCA
+  //return (lastBuyPrice <= 0 || buyCurrentPrice * 1.02 < lastBuyPrice)//DCA
+  return lastBuyPrice <= 0
     && buyCurrentPrice <= buyTriggerPrice
     && buyTriggerPrice > 0;
 };
