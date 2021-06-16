@@ -60,8 +60,7 @@ const execute = async (logger, rawData) => {
 
   //check the if the last candle is green
   //and the previous candle is red
-  //and previous candle RSI < 32
-  //32 maybe better than 30
+  //and previous candle RSI < 30
   const lastCandle = candles[candles.length - 2];
   const isLastCandleGreen = parseFloat(lastCandle.open) < parseFloat(lastCandle.close);
   const previousLastCandle = candles[candles.length - 3];
@@ -73,7 +72,7 @@ const execute = async (logger, rawData) => {
   });
 
   const previousLastCandleRSI = rsiValues[rsiValues.length - 3];
-  const isMeetBuyTrigger = isLastCandleGreen && isPreviousLastCandleRed && previousLastCandleRSI < 32;
+  const isMeetBuyTrigger = isLastCandleGreen && isPreviousLastCandleRed && previousLastCandleRSI < 30;
 
   const rsi = rsiValues[rsiValues.length - 1];
 
