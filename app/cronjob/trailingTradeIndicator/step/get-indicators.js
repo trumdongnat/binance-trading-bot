@@ -40,7 +40,8 @@ const execute = async (logger, rawData) => {
   const {
     symbol,
     symbolConfiguration: {
-      candles: { interval, limit }
+      candles: { interval, limit },
+      buy: { rsi }
     }
   } = data;
 
@@ -66,27 +67,30 @@ const execute = async (logger, rawData) => {
   const previousLastCandle = candles[candles.length - 3];
   const isPreviousLastCandleRed = parseFloat(previousLastCandle.open) > parseFloat(previousLastCandle.close);
 
-  const rsiValues = RSI.calculate({
+  const inputRSI = {
     values: candlesData.close,
     period: 14
-  });
+  };
+
+  const rsiValues = RSI.calculate(inputRSI);
 
   const previousLastCandleRSI = rsiValues[rsiValues.length - 3];
-  const isMeetBuyTrigger = isLastCandleGreen && isPreviousLastCandleRed && previousLastCandleRSI < 30;
+  logger.info({ rsi }, 'Configured rsi');
+  const isMeetBuyTrigger = isLastCandleGreen && isPreviousLastCandleRed && previousLastCandleRSI < parseFloat(rsi);
 
-  const rsi = rsiValues[rsiValues.length - 1];
+  const currentRsi = rsiValues[rsiValues.length - 1];
 
   // Get lowest price
   // const lowestPrice = _.min(candlesData.low);
   const lowestPrice = isMeetBuyTrigger ? candlesData.close[candlesData.close.length - 2] : Number.MIN_SAFE_INTEGER;
   const highestPrice = _.max(candlesData.high);
 
-  logger.info({ lowestPrice, highestPrice, rsi }, 'Retrieved lowest/highest price/rsi');
+  logger.info({ lowestPrice, highestPrice, currentRsi }, 'Retrieved lowest/highest price/rsi');
 
   data.indicators = {
     highestPrice,
     lowestPrice,
-    rsi
+    rsi: currentRsi
   };
 
   return data;

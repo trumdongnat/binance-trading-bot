@@ -98,6 +98,10 @@
         "limitPercentage": {
           "__name": "BINANCE_JOBS_TRAILING_TRADE_BUY_LIMIT_PERCENTAGE",
           "__format": "number"
+        },
+        "rsi": {
+          "__name": "BINANCE_JOBS_TRAILING_TRADE_BUY_RSI",
+          "__format": "number"
         }
       },
       "sell": {

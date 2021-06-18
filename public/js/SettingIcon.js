@@ -114,8 +114,8 @@ class SettingIcon extends React.Component {
       target.type === 'checkbox'
         ? target.checked
         : target.type === 'number'
-        ? +target.value
-        : target.value;
+          ? +target.value
+          : target.value;
     const stateKey = target.getAttribute('data-state-key');
 
     const { configuration } = this.state;
@@ -500,6 +500,47 @@ class SettingIcon extends React.Component {
                               step='0.0001'
                               data-state-key='buy.limitPercentage'
                               value={configuration.buy.limitPercentage}
+                              onChange={this.handleInputChange}
+                            />
+                          </Form.Group>
+
+                          <Form.Group
+                            controlId='field-buy-rsi'
+                            className='mb-2'>
+                            <Form.Label className='mb-0'>
+                              RSI{' '}
+                              <OverlayTrigger
+                                trigger='click'
+                                key='interval-overlay'
+                                placement='bottom'
+                                overlay={
+                                  <Popover id='interval-overlay-right'>
+                                    <Popover.Content>
+                                      Set the rsi of candle before the last candle
+                                      before the last - last - current
+                                      The bot will buy when
+                                      The RSI of the candle before the last candle is below <code>rsi</code>
+                                      The candle before the last candle is red
+                                      The last candle is green
+                                    </Popover.Content>
+                                  </Popover>
+                                }>
+                                <Button
+                                  variant='link'
+                                  className='p-0 m-0 ml-1 text-info'>
+                                  <i className='fa fa-question-circle'></i>
+                                </Button>
+                              </OverlayTrigger>
+                            </Form.Label>
+                            <Form.Control
+                              size='sm'
+                              type='number'
+                              placeholder='Enter the rsi'
+                              required
+                              min='0'
+                              step='0.01'
+                              data-state-key='buy.rsi'
+                              value={configuration.buy.rsi}
                               onChange={this.handleInputChange}
                             />
                           </Form.Group>

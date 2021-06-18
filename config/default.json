@@ -54,7 +54,8 @@
         "maxPurchaseAmounts": {},
         "triggerPercentage": 1.0,
         "stopPercentage": 1.02,
-        "limitPercentage": 1.021
+        "limitPercentage": 1.021,
+        "rsi": 30
       },
       "sell": {
         "enabled": true,
