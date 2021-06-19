@@ -82,7 +82,7 @@ const execute = async (logger, rawData) => {
 
   // Get lowest price
   var lowestPrice = _.min(candlesData.low);
-  if (rsi > 0) {
+  if (rsi > 1) {
     lowestPrice = isMeetBuyTrigger ? candlesData.close[candlesData.close.length - 2] : Number.MIN_SAFE_INTEGER;
   }
 
