@@ -81,8 +81,11 @@ const execute = async (logger, rawData) => {
   const currentRsi = rsiValues[rsiValues.length - 1];
 
   // Get lowest price
-  // const lowestPrice = _.min(candlesData.low);
-  const lowestPrice = isMeetBuyTrigger ? candlesData.close[candlesData.close.length - 2] : Number.MIN_SAFE_INTEGER;
+  var lowestPrice = _.min(candlesData.low);
+  if (rsi > 0) {
+    lowestPrice = isMeetBuyTrigger ? candlesData.close[candlesData.close.length - 2] : Number.MIN_SAFE_INTEGER;
+  }
+
   const highestPrice = _.max(candlesData.high);
 
   logger.info({ lowestPrice, highestPrice, currentRsi }, 'Retrieved lowest/highest price/rsi');
